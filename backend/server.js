@@ -1,4 +1,7 @@
 const http = require('http');
+/**
+ * Imports the main application module.
+ */
 const app = require('./app');
 // const dotenv = require('dotenv');
 const port = process.env.PORT || 3000;
