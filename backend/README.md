@@ -142,4 +142,51 @@
 #### Notes
 
 - JWT token is generated upon successful authentication
-- Password is verified against hashed password in database  
+- Email and password are validated against database
+- Password is hashed before comparison
+
+
+### GET /users/profile                  
+
+#### Description
+Get the authenticated user's profile information.
+
+#### Authentication
+Requires valid JWT token in Authorization header or cookie.
+
+#### Success Response
+- **Status Code**: 200 (OK)
+- **Response Body**:
+
+{
+  "user": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "_id": "string"
+  }
+}
+
+
+### GET /users/logout
+
+#### Description
+Logs out the currently authenticated user by invalidating their token.
+
+#### Authentication
+Requires valid JWT token in Authorization header or cookie.
+
+#### Success Response
+- **Status Code**: 200 (OK)
+- **Response Body**:
+
+{
+  "message": "logged out"
+}
+
+
+#### Notes
+- Clears token cookie
+- Adds token to blacklist to prevent reuse
