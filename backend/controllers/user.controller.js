@@ -12,7 +12,7 @@ module.exports.registerUser = async (req, res,next) => {
     }
     try {
       const { fullname, email, password } = req.body;
-      const hashedpassword= userModel.hashpassword(password);
+      const hashedpassword= await userModel.hashpassword(password);
 
 
       const user = await userService.createUser({
