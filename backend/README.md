@@ -190,3 +190,62 @@ Requires valid JWT token in Authorization header or cookie.
 #### Notes
 - Clears token cookie
 - Adds token to blacklist to prevent reuse
+
+### POST /captain/register
+
+#### Description
+Register a new captain with vehicle information.
+
+#### Request Body
+
+{
+  "fullname": {
+    "firstname": "string",
+    "lastname": "string"
+  },
+  "email": "string",
+  "password": "string",
+  "vehicle": {
+    "color": "string",
+    "plate": "string",
+    "capacity": "number",
+    "vehicleType": "string"
+  }
+}
+
+
+#### Validation
+- Email must be unique
+- All fields are required
+- Password will be hashed before storage
+
+#### Success Response
+- **Status Code**: 201 (Created)
+- **Response Body**:
+
+{
+  "token": "string",
+  "captain": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "vehicle": {
+      "color": "string",
+      "plate": "string",
+      "capacity": "number",
+      "vehicleType": "string"
+    },
+    "_id": "string"
+  },
+  "message": "Captain registered successfully"
+}
+
+
+#### Error Responses
+- **Status Code**: 400 (Bad Request)
+  - If email already exists
+  - If validation fails
+- **Status Code**: 500 (Internal Server Error)
+  - If server encounters an error

@@ -2,15 +2,19 @@ const userModel = require('../model/user.model');
 const userService = require('../services/user.services');
 const { validationResult } = require('express-validator');
 const jwt=require('jsonwebtoken')
-const blacklistTokenModel =require('../model/blacklistToken.model')
+const blacklistTokenModel =require('../model/blacklistToken.model');
+const captainModel = require('../model/captain.model');
 
 
 
 
 module.exports.registerUser = async (req, res,next) => {
-   const errors = validationResult(req);
+   const errors =await validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
+    }
+    if( await userModel.findOne({email:req.body.email})){
+      return res.status(400).json({ message: 'Email already exists' });
     }
     try {
       const { fullname, email, password } = req.body;
@@ -32,6 +36,8 @@ module.exports.registerUser = async (req, res,next) => {
     console.log(error);
 
 }}
+
+
 module.exports.loginUser = async (req, res,next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
