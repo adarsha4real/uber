@@ -249,3 +249,99 @@ Register a new captain with vehicle information.
   - If validation fails
 - **Status Code**: 500 (Internal Server Error)
   - If server encounters an error
+### Login Captain
+POST /captain/login
+
+#### Request Body
+{
+  "email": "string",
+  "password": "string"
+}
+
+#### Validation
+- Email must be valid format
+- Password must be at least 6 characters
+
+#### Success Response
+- **Status Code**: 200 (OK)
+- **Response Body**:
+{
+  "token": "string",
+  "captain": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string"
+    },
+    "email": "string",
+    "vehicle": {
+      "color": "string", 
+      "plate": "string",
+      "capacity": "number",
+      "vehicleType": "string"
+    },
+    "_id": "string"
+  },
+  "message": "Login successful"
+}
+
+#### Error Responses
+- **Status Code**: 401 (Unauthorized)
+  - If email/password is invalid
+- **Status Code**: 400 (Bad Request)
+  - If validation fails
+- **Status Code**: 500 (Internal Server Error)
+  - If server encounters an error
+
+### Get Captain Profile 
+GET /captain/profile
+
+#### Authentication
+Requires valid JWT token in Authorization header or cookie
+
+#### Success Response
+- **Status Code**: 200 (OK)
+- **Response Body**:
+{
+  "captain": {
+    "fullname": {
+      "firstname": "string",
+      "lastname": "string" 
+    },
+    "email": "string",
+    "vehicle": {
+      "color": "string",
+      "plate": "string", 
+      "capacity": "number",
+      "vehicleType": "string"
+    },
+    "_id": "string"
+  }
+}
+
+#### Error Responses
+- **Status Code**: 401 (Unauthorized)
+  - If no/invalid token provided
+- **Status Code**: 404 (Not Found)
+  - If captain not found
+- **Status Code**: 500 (Internal Server Error)
+  - If server encounters an error
+
+### Logout Captain
+GET /captain/logout
+
+#### Authentication
+Requires valid JWT token in Authorization header or cookie
+
+#### Success Response
+- **Status Code**: 200 (OK)
+- **Response Body**:
+{
+  "message": "Logout successful"
+}
+
+#### Error Responses
+- **Status Code**: 401 (Unauthorized)
+  - If no/invalid token provided
+- **Status Code**: 500 (Internal Server Error)
+  - If server encounters an error
+  
